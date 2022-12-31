@@ -22,7 +22,18 @@ input[type="file"] {
   clip: rect(0,0,0,0);
   border: 0;
 }
+
+input:focus {
+  outline: none;
+}
+
+::placeholder {
+  text-align: center;
+  color: black;
+}
+
 .file-upload-button {
+  border-radius: 25px;
   border: 1px solid red;
   display: inline-block;
   padding: 6px 12px;
@@ -35,17 +46,7 @@ input[type="file"] {
   border-bottom: 2px solid;
   background: none;
   text-align: right;
-  margin-right: 5%;
   width: 30%;
-}
-
-::placeholder {
-  text-align: center;
-  color: black;
-}
-
-input:focus {
-  outline: none;
 }
 
 .center {
