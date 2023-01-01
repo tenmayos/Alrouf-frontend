@@ -7,64 +7,123 @@ function ApplicationBox() {
         "marginTop": "2%",
         "marginBottom": "2%"
     }
-    const [isMouseOn, setIsMouseOn] = React.useState(false);
-    const [pdfResume, setPdfResume] = React.useState(null);
+    const [isMouseOnRed, setIsMouseOnRed] = React.useState(false);
+    const [isMouseOnGreen, setIsMouseOnGreen] = React.useState(false);
+    const [isFormRecieved, setIsFormRecieved] = React.useState(false);
+    const [fullFormData, setFullFormData] = React.useState({
+        fullName: "",
+        phone: "",
+        school: "",
+        major: "",
+        gpa: "",
+        totalGpa: "",
+        ResumeFile: null
+    });
 
-    function HandleMouseHover() {
-        isMouseOn? setIsMouseOn(false) : setIsMouseOn(true);
+    function HandleGlobalChange(e) {
+        const { id, value } = e.target;
+
+        if (id !== "ResumeFile") {
+            setFullFormData(prevState => {
+                return {
+                    ...prevState,
+                    [id]: value
+                }
+            });
+        }
+    }
+
+    function HandleMouseHover(event) {
+
+        const elementID = event.target.id;
+        if (elementID === "red-button") {
+            setIsMouseOnRed(!isMouseOnRed);
+        } else {
+            setIsMouseOnGreen(!isMouseOnGreen);
+        }
     }
 
     function HandleFileInput(event) {
         let pdfFile = event.target.files[0];
-        setPdfResume(pdfFile);
+        setFullFormData(prevForm => {
+            return {
+                ...prevForm,
+                "ResumeFile": pdfFile
+            }
+        })
     }
 
+    function HandleSubmission(event) {
+        setIsFormRecieved(true);
+        // Start writing the storing logic then apply it here.
+        event.preventDefault();
+    }
     return (
         <div className="submission-box">
-            <form>
+            <form onSubmit={HandleSubmission}>
+                {isFormRecieved? <span style={{"color": "green"}}>تم استلام الطلب بنجاح *</span> : null}
                 <TextInputSlice
                     style={styleObj}
-                    placeholder="الاسم الاول"
-                />
-                <TextInputSlice
-                    style={styleObj}
-                    placeholder="اسم الأب"
-                />
-                <TextInputSlice
-                    style={styleObj}
-                    placeholder="اسم العائلة"
-                />
-                <TextInputSlice
-                    style={styleObj}
-                    placeholder="جامعة التخرج"
-                />
-                <TextInputSlice
-                    style={styleObj}
-                    placeholder="التخصص العلمي"
-                />
-                <TextInputSlice
-                    style={styleObj}
-                    placeholder="المعدل الجامعي"
-                />
-                <TextInputSlice
-                    style={styleObj}
-                    placeholder="المعدل الكلي"
+                    placeholder="الاسم الكامل"
+                    id="fullName"
+                    onChange={HandleGlobalChange}
                 />
                 <TextInputSlice
                     style={styleObj}
                     placeholder="رقم الهاتف"
+                    id="phone"
+                    onChange={HandleGlobalChange}
+                />
+                <TextInputSlice
+                    style={styleObj}
+                    placeholder="جامعة التخرج"
+                    id="school"
+                    onChange={HandleGlobalChange}
+                />
+                <TextInputSlice
+                    style={styleObj}
+                    placeholder="التخصص العلمي"
+                    id="major"
+                    onChange={HandleGlobalChange}
+                />
+                <TextInputSlice
+                    style={styleObj}
+                    placeholder="المعدل الجامعي"
+                    id="gpa"
+                    type="number"
+                    onChange={HandleGlobalChange}
+                />
+                <TextInputSlice
+                    style={styleObj}
+                    placeholder="المعدل الكلي"
+                    id="totalGpa"
+                    type="number"
+                    onChange={HandleGlobalChange}
                 />
                 <br />
 
                 <label
-                style={isMouseOn? {"background": "red"} : null}
-                onMouseEnter={HandleMouseHover}
-                onMouseLeave={HandleMouseHover}
-                htmlFor="file-upload"
-                className="file-upload-button">
-                    {pdfResume === null? "ارفق السيرة الذاتية" : pdfResume.name}
+                    style={isMouseOnRed ? { "background": "red", "color": "white" } : null}
+                    id="red-button"
+                    onMouseEnter={HandleMouseHover}
+                    onMouseLeave={HandleMouseHover}
+                    htmlFor="ResumeFile"
+                    className="file-upload-button textfield-topbot-margins">
+                    {fullFormData.ResumeFile === null ? "ارفق السيرة الذاتية" : fullFormData.ResumeFile.name}
                 </label>
-                <input id="file-upload" onChange={HandleFileInput} type="file" accept=".pdf" />
+
+                <input id="ResumeFile" onChange={HandleFileInput} type="file" accept=".pdf" />
+
+                <br />
+
+                <button
+                    onMouseEnter={HandleMouseHover}
+                    onMouseLeave={HandleMouseHover}
+                    style={isMouseOnGreen ? { "background": "green", "color": "white" } : null}
+                    className="submit-button"
+                    type="submit">
+                    ارسال
+                </button>
             </form>
         </div>
     );
