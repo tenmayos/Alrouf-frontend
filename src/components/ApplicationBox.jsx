@@ -13,6 +13,7 @@ function ApplicationBox() {
     const [fullFormData, setFullFormData] = React.useState({
         fullName: "",
         phone: "",
+        email: "",
         school: "",
         major: "",
         gpa: "",
@@ -50,8 +51,11 @@ function ApplicationBox() {
                 ...prevForm,
                 "ResumeFile": pdfFile
             }
-        })
+        });
     }
+    
+    // Currently we do not check the form's input because this is for demonstration purposes only, however in a real world app it is strongly discouraged
+    // To implement a direct form input without checks and responses.
 
     function HandleSubmission(event) {
         setIsFormRecieved(true);
@@ -72,6 +76,12 @@ function ApplicationBox() {
                     style={styleObj}
                     placeholder="رقم الهاتف"
                     id="phone"
+                    onChange={HandleGlobalChange}
+                />
+                <TextInputSlice
+                    style={styleObj}
+                    placeholder="البريد الالكتروني"
+                    id="email"
                     onChange={HandleGlobalChange}
                 />
                 <TextInputSlice
