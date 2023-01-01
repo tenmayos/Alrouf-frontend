@@ -69,3 +69,21 @@ input:focus {
   width: 50%;
   height: auto;
 }
+
+.textfield-topbot-margins {
+  margin-top: 2%;
+  margin-bottom: 2%;
+}
+
+.submit-button {
+  border-radius: 25px;
+  border: 1px solid green;
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+.submission-box .submit-button {
+  margin-left: 80%;
+  width: 100px;
+}
