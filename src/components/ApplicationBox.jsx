@@ -1,5 +1,6 @@
 import React from "react";
 import TextInputSlice from "./TextInputSlice";
+import axios from "axios";
 
 function ApplicationBox() {
 
@@ -18,11 +19,12 @@ function ApplicationBox() {
         major: "",
         gpa: "",
         totalGpa: "",
+        doneVolunteerWork: false,
         ResumeFile: null
     });
 
-    function HandleGlobalChange(e) {
-        const { id, value } = e.target;
+    function HandleGlobalChange(event) {
+        const { id, value } = event.target;
 
         if (id !== "ResumeFile") {
             setFullFormData(prevState => {
@@ -32,6 +34,17 @@ function ApplicationBox() {
                 }
             });
         }
+    }
+
+    // No need to pick up the event argument since this func acts as a toggler.
+    function HandleCheckBox() {
+        
+        setFullFormData((prevState) => {
+            return {
+                ...prevState,
+                doneVolunteerWork: fullFormData.doneVolunteerWork? false : true
+            }
+        });
     }
 
     function HandleMouseHover(event) {
@@ -45,6 +58,9 @@ function ApplicationBox() {
     }
 
     function HandleFileInput(event) {
+        if (!event.target.files[0])
+        return;
+        
         let pdfFile = event.target.files[0];
         setFullFormData(prevForm => {
             return {
@@ -53,19 +69,29 @@ function ApplicationBox() {
             }
         });
     }
-    
+
     // Currently we do not check the form's input because this is for demonstration purposes only, however in a real world app it is strongly discouraged
     // To implement a direct form input without checks and responses.
 
     function HandleSubmission(event) {
-        setIsFormRecieved(true);
-        // Start writing the storing logic then apply it here.
         event.preventDefault();
+        setIsFormRecieved(true);
+        // Start writing the storing logic then apply it here. vvvvv
+        let formData = new FormData();
+        for (var key in fullFormData) {
+            console.log(key, fullFormData[key])
+            formData.append(key, fullFormData[key]);
+        }
+        axios.post("http://localhost:4000", formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        });
     }
     return (
         <div className="submission-box">
             <form onSubmit={HandleSubmission}>
-                {isFormRecieved? <span style={{"color": "green"}}>تم استلام الطلب بنجاح *</span> : null}
+                {isFormRecieved ? <span style={{ "color": "green" }}>تم استلام الطلب بنجاح *</span> : null}
                 <TextInputSlice
                     style={styleObj}
                     placeholder="الاسم الكامل"
@@ -110,6 +136,12 @@ function ApplicationBox() {
                     type="number"
                     onChange={HandleGlobalChange}
                 />
+                <input 
+                id="doneVolunteerWork"
+                type="checkbox"
+                onChange={HandleCheckBox}
+                />
+                <span>هل قمت باعمال تطوعية؟</span>
                 <br />
 
                 <label
