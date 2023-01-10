@@ -20,8 +20,8 @@ This system was meant for demonstration purposes only.
 
   No need to worry about the packages vulnerabilities as this is nothing serious and the project is merely meant for demonstration.
 
-2. Start the web app using `npm start` ![npm start](/Ref_Images/start.png) 
-    This may take a bit.
+2. Start the web app using `npm start`, This may take a bit. ![npm start](/Ref_Images/start.png) 
+    
 
     * We should see the following message appear in the terminal when the app launches 
     ![started and compiled successfully](/Ref_Images/started.png)
