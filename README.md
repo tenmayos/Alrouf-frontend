@@ -15,12 +15,21 @@ This system was meant for demonstration purposes only.
 
 1. We will need to install the required dependencies using NPM with the following command `npm install` ![npm install](/Ref_Images/npm.png)
 
- * We should see the following message when the installation of dependencies is complete ![dependencies installed successfully](/Ref_Images/npm-installed.png) No need to worry about the packages vulnerabilities as this is nothing serious and the project is merely meant for demonstration.
+ * We should see the following message when the installation of dependencies is complete 
+ ![dependencies installed successfully](/Ref_Images/npm-installed.png)
 
-2. Start the web app using `npm start` ![npm start](/Ref_Images/start.png) This may take a bit.
-    * We should see the following message appear in the terminal when the app launches ![started and compiled successfully](/Ref_Images/started.png)
-    * Followed by the default browser opening up `http://localhost:3000` displaying the following website page ![Main page](/Ref_Images/website.png)
+  No need to worry about the packages vulnerabilities as this is nothing serious and the project is merely meant for demonstration.
 
-3. We should now be able to fill the form and submit it to the back-end for storing in the database. ![Main page filled](/Ref_Images/website-filled.png)
+2. Start the web app using `npm start` ![npm start](/Ref_Images/start.png) 
+    This may take a bit.
+
+    * We should see the following message appear in the terminal when the app launches 
+    ![started and compiled successfully](/Ref_Images/started.png)
+
+    * Followed by the default browser opening up `http://localhost:3000` displaying the following website page 
+    ![Main page](/Ref_Images/website.png)
+
+3. We should now be able to fill the form and submit it to the back-end for storing in the database. 
+    * ![Main page filled](/Ref_Images/website-filled.png)
 
 This website will make a POST API call with the assumption that the back-end is up and running on the same machine on port 4000.
